@@ -12,43 +12,52 @@ export class Home extends React.Component {
         }
     }
     componentDidMount() {
-        axios.get( "/api/post/get/all" ).then( ( res ) => {
-            console.log( res.data );
-            this.setState( {
-                postList: res.data.postList
-            } )
+        let fetchRes = fetch(
+            "/api/post/get/all" );
+        fetchRes.then( res =>
+            res.json() ).then( d => {
+                this.setState( {
+                    postList: d.postList
+                } )
+            } ) 
 
-        } ).catch( err => {
-            console.log( "Error : " + err );
-        } )
+        //   axios.get( "/api/post/get/all" ).then( ( res ) => {
+        //     console.log( res.data );
+        //     this.setState( {
+        //         postList: res.data.postList
+        //     } )
+
+        // } ).catch( err => {
+        //     console.log( "Error : " + err );
+        // } )
     }
-    handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
-        this.setState({activePage: pageNumber});
+    handlePageChange( pageNumber ) {
+        console.log( `active page is ${pageNumber}` );
+        this.setState( { activePage: pageNumber } );
     }
-    handleFollow=(userId) =>{
-        if(localStorage.getItem('token')){           
+    handleFollow = ( userId ) => {
+        if ( localStorage.getItem( 'token' ) ) {
             const headers = {
                 'Content-Type': 'application/json',
-                'authorization': localStorage.getItem('token')
+                'authorization': localStorage.getItem( 'token' )
             }
             let user = {
-                user_id : userId
-            } 
+                user_id: userId
+            }
             axios.post( "/api/post/follow", user, {
                 headers: headers
             } ).then( ( res ) => {
-                alert("Follow Successfully");
-            } ).catch((err)=>{
-                
-                if(err.response.status===419){
-                    alert("Already Follow");
+                alert( "Follow Successfully" );
+            } ).catch( ( err ) => {
+
+                if ( err.response.status === 419 ) {
+                    alert( "Already Follow" );
                 }
-                console.log("Error ",err)
-            })
-        }else{
-            alert("Please Login Before Follow !!");
-            this.props.history.push("/login");
+                console.log( "Error ", err )
+            } )
+        } else {
+            alert( "Please Login Before Follow !!" );
+            this.props.history.push( "/login" );
         }
     }
     render() {
@@ -67,7 +76,7 @@ export class Home extends React.Component {
                                     </div>
                                     <div className="col-6">
                                         <div className="row justify-content-end">
-                                            <Link to="#" onClick={()=>this.handleFollow(item.userId)} > <i className="fa fa-user-plus fa-2x" style={{ color: "orange" }}></i>Follow</Link>
+                                            <Link to="#" onClick={() => this.handleFollow( item.userId )} > <i className="fa fa-user-plus fa-2x" style={{ color: "orange" }}></i>Follow</Link>
                                         </div>
                                     </div>
                                 </div>
