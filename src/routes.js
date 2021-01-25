@@ -8,7 +8,7 @@ import { UserDetail } from './components/UserDetail/UserDetail';
 
 const Routes = () => {
     return <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/*" component={Home} />
         <Route exact path="/login" component={Login} />   
         <Route exact path="/signup" component={Signup} />  
         <Route exact path="/user/detail/:id" component={UserDetail} />     
