@@ -21,7 +21,6 @@ export class UserDetail extends React.Component {
     }
     getUserProfile() {
         let token = localStorage.getItem( 'token' );
-
         const headers = {
             'authorization': token
         }
